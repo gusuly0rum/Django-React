@@ -1,19 +1,20 @@
 import * as ArticleAPI from '../apis/article_api';
 
-export const RECEIVE_ARTICLES = 'RECEIVE_ARTICLES';
 export const RECEIVE_ARTICLE = 'RECEIVE_ARTICLE';
-
-export const receiveArticles = (articles) => {
-  return {
-    type: RECEIVE_ARTICLES,
-    articles
-  }
-};
+export const RECEIVE_ARTICLES = 'RECEIVE_ARTICLES';
+export const RECEIVE_ARTICLE_ERRORS = 'RECEIVE_ARTICLE_ERRORS';
 
 export const receiveArticle = (article) => {
   return {
     type: RECEIVE_ARTICLE,
     article
+  }
+};
+
+export const receiveArticles = (articles) => {
+  return {
+    type: RECEIVE_ARTICLES,
+    articles
   }
 };
 
@@ -25,6 +26,12 @@ export const fetchArticles = () => (dispatch) => {
 
 export const fetchArticle = (articleId) => (dispatch) => {
   return ArticleAPI.fetchArticle(articleId).then(response => {
+    dispatch(receiveArticle(response.data));
+  });
+};
+
+export const createArticle = (formArticle) => (dispatch) => {
+  return ArticleAPI.createArticle(formArticle).then(response => {
     dispatch(receiveArticle(response.data));
   });
 };

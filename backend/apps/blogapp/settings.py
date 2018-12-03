@@ -25,27 +25,43 @@ SECRET_KEY = '_aj069g9n!vj*0^3_qhopt$s55_lhn((-*ca21ii%&*ezb%jta'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    'www.localhost',
+]
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
     'django.contrib.auth',
-    'django.contrib.contenttypes',
+    'django.contrib.admin',
+    'django.contrib.sites',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.contenttypes',
 
     # packages
     'corsheaders',
+
     'rest_framework',
+    'rest_framework.authtoken',
+
+
+    'allauth',
+    'allauth.account',
+
+    'rest_auth',
+    'rest_auth.registration',
 
     # apps
     'article.apps.ArticleConfig',
     'music.apps.MusicConfig',
+    'user.apps.UserConfig',
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -135,9 +151,9 @@ REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+        # 'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
         # 'rest_framework.permissions.IsAuthenticated'
-        # 'rest_framework.permissions.AllowAny'
+        'rest_framework.permissions.AllowAny'
     ],
 
     # 'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -156,3 +172,4 @@ REST_FRAMEWORK = {
 }
 
 CORS_ORIGIN_ALLOW_ALL = True
+

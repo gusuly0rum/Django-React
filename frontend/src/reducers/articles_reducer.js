@@ -7,10 +7,16 @@ const articlesReducer = (articlesState = _defaultState, action) => {
 
   switch (action.type) {
   case RECEIVE_ARTICLES:
-    return action.articles;
+    return {
+      ...articlesState,
+      ...action.articles
+    };
 
   case RECEIVE_ARTICLE:
-    return action.article;
+    return {
+      ...articlesState,
+      ...action.article
+    };
 
   default:
     return articlesState;

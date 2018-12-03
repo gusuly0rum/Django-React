@@ -1,10 +1,10 @@
 from article.models import Article
 from .serializers import ArticleSerializer
 from rest_framework.viewsets import ViewSet
+from django.contrib.auth.models import User
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from .formatters import formatter, query_filter
-
 
 class ArticleViewSet(ViewSet):
     queryset = Article.objects.all()
@@ -21,11 +21,50 @@ class ArticleViewSet(ViewSet):
         article = formatter([serializer.data])
         return Response(article)
 
-    # def create(self, request):
-    #     pass
+    def create(self, request):
+        articles = ArticleViewSet.queryset
+        articles.create(author=request.user, title=request.data['title'], body=request.data['body'])
+        article = articles.last()
+        serializer = ArticleSerializer(article, many=False)
+        article = formatter([serializer.data])
+        return Response(article)
 
     # def update(self, request, pk=None):
     #     pass
 
     # def destroy(self, request, pk=None):
     #     pass
+
+
+
+
+
+
+
+# from rest_framework.generics import (
+#     ListAPIView,
+#     RetrieveAPIView,
+#     CreateAPIView,
+#     UpdateAPIView,
+#     DestroyAPIView
+# )
+
+# class ArticleListView(ListAPIView):
+#     queryset = Article.objects.all()
+#     serializer_class = ArticleSerializer
+
+# class ArticleDetailView(RetrieveAPIView):
+#     queryset = Article.objects.all()
+#     serializer_class = ArticleSerializer
+
+# class ArticleCreateView(CreateAPIView):
+#     queryset = Article.objects.all()
+#     serializer_class = ArticleSerializer
+
+# class ArticleUpdateView(UpdateAPIView):
+#     queryset = Article.objects.all()
+#     serializer_class = ArticleSerializer
+
+# class ArticleDeleteView(DestroyAPIView):
+#     queryset = Article.objects.all()
+#     serializer_class = ArticleSerializer

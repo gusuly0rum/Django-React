@@ -16,7 +16,7 @@ class ArticlesList extends React.Component {
           <List.Item>
             <List.Item.Meta
               avatar={<Avatar src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png" />}
-              title={<a href="https://ant.design">{item.title}</a>}
+              title={<a href={`/articles/${item.id}`}>{item.title}</a>}
               description={item.body} />
           </List.Item>
         )}
