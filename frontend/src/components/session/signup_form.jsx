@@ -13,8 +13,10 @@ class SignupForm extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     this.props.form.validateFieldsAndScroll((errors, values) => {
+      console.log(values);
       if (!errors) this.props.signupUser(values);
     });
+    this.props.history.push('/articles');
   }
 
   handleConfirmBlur = (event) => {
@@ -23,7 +25,7 @@ class SignupForm extends React.Component {
   }
 
   compareToFirstPassword = (_, value, callback) => {
-    if (value && value !== this.props.form.getFieldValue('password')) {
+    if (value && value !== this.props.form.getFieldValue('password1')) {
       callback('Two passwords that you enter is inconsistent!');
     } else {
       callback();
@@ -32,7 +34,7 @@ class SignupForm extends React.Component {
 
   validateToNextPassword = (_, value, callback) => {
     if (value && this.state.confirmDirty) {
-      this.props.form.validateFields(['confirm'], { force: true });
+      this.props.form.validateFields(['password2'], { force: true });
     }
     callback();
   }
@@ -43,18 +45,24 @@ class SignupForm extends React.Component {
     return (
       <Form className="login-form">
         <FormItem>
+          {getFieldDecorator('username', {
+            rules: [{ required: true, message: 'Please input your username!' }] })(
+            <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" />)}
+        </FormItem>
+
+        <FormItem>
           {getFieldDecorator('email', {
-            rules: [{ type: 'email', message: 'The input is not valid E-mail!' }, { required: true, message: 'Please input your email!' }] })(
+            rules: [{ type: 'email', message: 'The input is not valid email!' }, { required: true, message: 'Please input your email!' }] })(
             <Input prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Email" />)}
         </FormItem>
 
         <FormItem>
-          {getFieldDecorator('password', { rules: [{ required: true, message: 'Please input your Password!' }, { validator: this.validateToNextPassword }] })(
+          {getFieldDecorator('password1', { rules: [{ required: true, message: 'Please input your Password!' }, { validator: this.validateToNextPassword }] })(
             <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" />)}
         </FormItem>
 
         <FormItem>
-          {getFieldDecorator('confirm', { rules: [{ required: true, message: 'Please confirm your Password!' }, { validator: this.compareToFirstPassword }] })(
+          {getFieldDecorator('password2', { rules: [{ required: true, message: 'Please confirm your Password!' }, { validator: this.compareToFirstPassword }] })(
             <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" onBlur={this.handleConfirmBlur}  />)}
         </FormItem>
 
