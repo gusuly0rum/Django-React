@@ -51,7 +51,7 @@ export const loginUser = (formUser) => {
 
 export const signupUser = (formUser) => {
   return (dispatch) => {
-    SessionAPI.createUser(formUser)
+    SessionAPI.signupUser(formUser)
     .then((response) => {
       const token = response.data.key;
       const expirationDate = new Date(new Date().getTime() + 3600 * 1000)

@@ -13,7 +13,7 @@ export const logoutUser = (userId) => {
   );
 }
 
-export const createUser = (formUser) => {
+export const signupUser = (formUser) => {
   return axios.post(
     'http://localhost:8000/rest-auth/registration/',
     formUser
