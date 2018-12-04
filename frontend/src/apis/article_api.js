@@ -1,20 +1,22 @@
 import axios from 'axios';
 
+const instance = axios.create({
+  baseURL: 'http://localhost:8000/api/',
+  timeout: 1000,
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization: 'Token ' + localStorage.getItem('token')
+  }
+});
+
 export const fetchArticles = () => {
-  return axios.get('http://localhost:8000/api/articles/');
+  return instance.get('articles/');
 };
 
 export const fetchArticle = (articleId) => {
-  return axios.get(`http://localhost:8000/api/articles/${articleId}/`);
+  return instance.get(`articles/${articleId}/`);
 };
 
 export const createArticle = (formArticle) => {
-  axios.defaults.headers = {
-    'Content-Type': 'application/json',
-    'Authorization': localStorage.getItem('token')
-  }
-  return axios.post(
-    'http://localhost:8000/api/articles/create/',
-    formArticle
-  )
+  return instance.post('articles/create/', formArticle);
 }

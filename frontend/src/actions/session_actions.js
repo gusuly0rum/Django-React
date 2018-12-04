@@ -64,7 +64,7 @@ export const signupUser = (formUser) => {
 
 export const logoutUser = () => {
   return (dispatch) =>  {
-    localStorage.removeItem('user');
+    localStorage.removeItem('token');
     localStorage.removeItem('expirationDate');
     dispatch(receiveLogout());
   }
