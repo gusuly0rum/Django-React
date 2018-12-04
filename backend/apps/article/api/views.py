@@ -51,8 +51,8 @@ class ArticleUpdateView(UpdateAPIView):
     permission_classes = [IsAuthenticated]
 
     def patch(self, request, pk=None):
-        article = Article(author=request.user, title=request.data['title'], body=request.data['body'])
-        article.save()
+        queryset = Article.objects.all()
+        article = get_object_or_404(queryset, pk=pk)
         serializer = ArticleSerializer(article, many=False)
         article = formatter([serializer.data])
         return Response(article)
@@ -62,8 +62,8 @@ class ArticleDeleteView(DestroyAPIView):
     permission_classes = [IsAuthenticated]
 
     def delete(self, request, pk=None):
-        article = Article(author=request.user, title=request.data['title'], body=request.data['body'])
-        article.save()
+        queryset = Article.objects.all()
+        article = get_object_or_404(queryset, pk=pk)
         serializer = ArticleSerializer(article, many=False)
         article = formatter([serializer.data])
         return Response(article)

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const instance = axios.create({
+const Axios = axios.create({
   baseURL: 'http://localhost:8000/api/',
   timeout: 1000,
   headers: {
@@ -10,13 +10,13 @@ const instance = axios.create({
 });
 
 export const fetchArticles = () => {
-  return instance.get('articles/');
+  return axios.get('http://localhost:8000/api/articles/');
 };
 
 export const fetchArticle = (articleId) => {
-  return instance.get(`articles/${articleId}/`);
+  return axios.get(`http://localhost:8000/api/articles/${articleId}/`);
 };
 
 export const createArticle = (formArticle) => {
-  return instance.post('articles/create/', formArticle);
+  return Axios.post('articles/create/', formArticle);
 }
