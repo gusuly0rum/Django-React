@@ -7,15 +7,17 @@ const { Header, Content, Footer } = Layout;
 class Outline extends React.Component {
 
   render() {
-    let login = <Menu.Item key="2"><Link to="login">Login</Link></Menu.Item>;
+    let login = <Menu.Item key="2"><Link to="/login">Login</Link></Menu.Item>;
     let logout = <Menu.Item key="2" onClick={this.props.logoutUser}>Logout</Menu.Item>;
-    let signup = <Menu.Item key="3"><Link to="signup">Signup</Link></Menu.Item>;
+    let signup = <Menu.Item key="3"><Link to="/signup">Signup</Link></Menu.Item>;
+    let createArticle = <Menu.Item key="4"><Link to="/articles/create">Create Article</Link></Menu.Item>;
 
     if (this.props.token) {
       login = null;
       signup = null;
     } else {
       logout = null;
+      createArticle = null;
     }
 
     return (
@@ -28,6 +30,7 @@ class Outline extends React.Component {
                 defaultSelectedKeys={['2']}
                 style={{ lineHeight: '64px' }}>
             <Menu.Item key="1"><Link to="/articles">Articles</Link></Menu.Item>
+            {createArticle}
             { logout }
             { login }
             { signup }

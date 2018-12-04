@@ -9,8 +9,12 @@ export const fetchArticle = (articleId) => {
 };
 
 export const createArticle = (formArticle) => {
+  axios.defaults.headers = {
+    'Content-Type': 'application/json',
+    'Authorization': localStorage.getItem('token')
+  }
   return axios.post(
-    'http://localhost:8000/api/articles/',
+    'http://localhost:8000/api/articles/create/',
     formArticle
   )
 }

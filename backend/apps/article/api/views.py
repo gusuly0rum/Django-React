@@ -23,8 +23,9 @@ class ArticleViewSet(ViewSet):
 
     def create(self, request):
         articles = ArticleViewSet.queryset
-        articles.create(author=request.user, title=request.data['title'], body=request.data['body'])
-        article = articles.last()
+        article = Article(title=request.data['title'], body=request.data['body'])
+        article.author = request.user
+        article.save()
         serializer = ArticleSerializer(article, many=False)
         article = formatter([serializer.data])
         return Response(article)
@@ -53,18 +54,21 @@ class ArticleViewSet(ViewSet):
 #     queryset = Article.objects.all()
 #     serializer_class = ArticleSerializer
 
-# class ArticleDetailView(RetrieveAPIView):
-#     queryset = Article.objects.all()
-#     serializer_class = ArticleSerializer
-
 # class ArticleCreateView(CreateAPIView):
 #     queryset = Article.objects.all()
 #     serializer_class = ArticleSerializer
 
+# class ArticleDetailView(RetrieveAPIView):
+#     lookup_field = 'pk'
+#     queryset = Article.objects.all()
+#     serializer_class = ArticleSerializer
+
 # class ArticleUpdateView(UpdateAPIView):
+#     lookup_field = 'pk'
 #     queryset = Article.objects.all()
 #     serializer_class = ArticleSerializer
 
 # class ArticleDeleteView(DestroyAPIView):
+#     lookup_field = 'pk'
 #     queryset = Article.objects.all()
 #     serializer_class = ArticleSerializer
