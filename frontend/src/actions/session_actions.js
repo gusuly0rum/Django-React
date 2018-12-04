@@ -26,24 +26,22 @@ export const receiveSessionErrors = (errors) => {
 };
 
 
-export const registerTimeout = (expirationDate) => {
+export const registerTimeout = () => {
   return (dispatch) => {
-    setTimeout(() => {
-      dispatch(logoutUser());
-    }, expirationDate * 1000);
+    setTimeout(() => dispatch(logoutUser()), 3600 * 1000);
   }
 }
 
 export const loginUser = (formUser) => {
   return (dispatch) => {
     SessionAPI.loginUser(formUser)
-    .then((response) => {
+    .then(response => {
       const token = response.data.key;
       const expirationDate = new Date(new Date().getTime() + 3600 * 1000)
       localStorage.setItem('token', token);
       localStorage.setItem('expirationDate', expirationDate);
       dispatch(receiveLogin(token));
-      dispatch(registerTimeout(expirationDate));
+      dispatch(registerTimeout());
     })
     .then(errors => dispatch(receiveSessionErrors(errors)));
   }
@@ -52,13 +50,13 @@ export const loginUser = (formUser) => {
 export const signupUser = (formUser) => {
   return (dispatch) => {
     SessionAPI.signupUser(formUser)
-    .then((response) => {
+    .then(response => {
       const token = response.data.key;
       const expirationDate = new Date(new Date().getTime() + 3600 * 1000)
       localStorage.setItem('token', token);
       localStorage.setItem('expirationDate', expirationDate);
       dispatch(receiveLogin(token));
-      dispatch(registerTimeout(expirationDate));
+      dispatch(registerTimeout());
     })
     .then(errors => dispatch(receiveSessionErrors(errors)));
   }
@@ -66,10 +64,25 @@ export const signupUser = (formUser) => {
 
 export const logoutUser = () => {
   return (dispatch) =>  {
-    SessionAPI.logoutUser().then(() => {
-      localStorage.removeItem('user');
-      localStorage.removeItem('expirationDate');
-      dispatch(receiveLogout());
-    });
+    localStorage.removeItem('user');
+    localStorage.removeItem('expirationDate');
+    dispatch(receiveLogout());
+  }
+}
+
+export const autoLogin = () => {
+  return (dispatch) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const expirationDate = new Date(localStorage.getItem('expirationDate'));
+      if (expirationDate <= new Date()) {
+        dispatch(logoutUser());
+      } else {
+        dispatch(receiveLogin(token));
+        dispatch(registerTimeout());
+      }
+    } else {
+      dispatch(logoutUser());
+    }
   }
 }

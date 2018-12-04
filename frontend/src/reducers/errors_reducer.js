@@ -12,11 +12,11 @@ const errorsReducer = (errorsState = _defaultState, action) => {
 
   switch (action.type) {
   case RECEIVE_SESSION_ERRORS:
-    newErrorsState.session = action.errors;
+    newErrorsState.session = [action.errors] || [];
     return newErrorsState;
 
   case RECEIVE_ARTICLE_ERRORS:
-    newErrorsState.articles = action.errors;
+    newErrorsState.articles = [action.errors];
     return newErrorsState;
     
   default:

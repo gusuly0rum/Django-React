@@ -13,6 +13,7 @@ class LoginForm extends React.Component {
     this.props.form.validateFields((error, values) => {
       if (!error) this.props.loginUser(values);
     });
+    this.props.history.push('/articles');
   }
 
   render() {
@@ -20,8 +21,8 @@ class LoginForm extends React.Component {
     return (
       <Form className="login-form">
         <FormItem>
-          {getFieldDecorator('email', { rules: [{ required: true, message: 'Please input your email!' }]})(
-          <Input prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Email" />)}
+          {getFieldDecorator('username', { rules: [{ required: true, message: 'Please input your username!' }]})(
+          <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" />)}
         </FormItem>
 
         <FormItem>

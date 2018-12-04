@@ -7,12 +7,6 @@ export const loginUser = (formUser) => {
   );
 }
 
-export const logoutUser = (userId) => {
-  return axios.post(
-    `http://localhost:8000/api/users/${userId}/`
-  );
-}
-
 export const signupUser = (formUser) => {
   return axios.post(
     'http://localhost:8000/rest-auth/registration/',

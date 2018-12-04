@@ -7,7 +7,7 @@ const sessionReducer = (sessionState = _defaultState, action) => {
 
   switch (action.type) {
   case RECEIVE_LOGIN:
-    return action.token;
+    return { token: action.token };
   
   case RECEIVE_LOGOUT:
     return _defaultState;

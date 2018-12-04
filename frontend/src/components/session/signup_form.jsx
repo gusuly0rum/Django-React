@@ -6,17 +6,14 @@ const FormItem = Form.Item;
 class SignupForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      confirmDirty: false,
-      autoCompleteResult: [],
-    };
+    this.state = { confirmDirty: false };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSubmit(event) {
     event.preventDefault();
     this.props.form.validateFieldsAndScroll((errors, values) => {
-      if (!errors) console.log('Received values of form: ', values);
+      if (!errors) this.props.signupUser(values);
     });
   }
 
@@ -25,7 +22,7 @@ class SignupForm extends React.Component {
     this.setState({ confirmDirty: this.state.confirmDirty || !!value });
   }
 
-  compareToFirstPassword = (rule, value, callback) => {
+  compareToFirstPassword = (_, value, callback) => {
     if (value && value !== this.props.form.getFieldValue('password')) {
       callback('Two passwords that you enter is inconsistent!');
     } else {
@@ -33,7 +30,7 @@ class SignupForm extends React.Component {
     }
   }
 
-  validateToNextPassword = (rule, value, callback) => {
+  validateToNextPassword = (_, value, callback) => {
     if (value && this.state.confirmDirty) {
       this.props.form.validateFields(['confirm'], { force: true });
     }
