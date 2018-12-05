@@ -19,10 +19,7 @@ const articlesReducer = (articlesState = _defaultState, action) => {
     };
 
   case REMOVE_ARTICLE:
-    const newArticlesState = {
-      ...articlesState
-    };
-    console.log(action.articleId);
+    const newArticlesState = { ...articlesState };
     delete newArticlesState[action.articleId];
     return newArticlesState;
 

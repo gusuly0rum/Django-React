@@ -25,7 +25,8 @@ class ArticleForm extends React.Component {
     if (this.props.isUpdate) {
       return this.props.updateArticle(this.props.article.id, this.state);
     }
-    this.props.createArticle(this.state);
+    this.props.createArticle(this.state)
+      .then(() => this.props.history.push('/articles'));
   }
 
   render() {

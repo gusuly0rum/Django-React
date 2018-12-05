@@ -13,7 +13,6 @@ class SignupForm extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     this.props.form.validateFieldsAndScroll((errors, values) => {
-      console.log(values);
       if (!errors) this.props.signupUser(values);
     });
     this.props.history.push('/articles');

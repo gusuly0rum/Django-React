@@ -52,7 +52,6 @@ export const updateArticle = (articleId, formArticle) => (dispatch) => {
 
 export const deleteArticle = (articleId) => (dispatch) => {
   return ArticleAPI.deleteArticle(articleId).then(response => {
-    console.log(response.data);
     dispatch(removeArticle(response.data));
   });
 };

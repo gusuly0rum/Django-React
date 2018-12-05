@@ -58,8 +58,11 @@ class ArticleUpdateView(UpdateAPIView):
         queryset = Article.objects.all()
         article = get_object_or_404(queryset, pk=pk)
         serializer = ArticleSerializer(article, data=request.data, partial=True)
-        article = formatter([serializer.data])
-        return Response(article)
+        if serializer.is_valid():
+            serializer.save()
+            article = formatter([serializer.data])
+            return Response(article)
+        return Response(serializer.errors)
 
 
 class ArticleDeleteView(DestroyAPIView):
