@@ -40,7 +40,11 @@ class ArticleCreateView(CreateAPIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        article = Article(author=request.user, title=request.data['title'], body=request.data['body'])
+        article = Article(
+            author=request.user,
+            title=request.data['title'],
+            body=request.data['body']
+        )
         article.save()
         serializer = ArticleSerializer(article, many=False)
         article = formatter([serializer.data])
@@ -53,7 +57,7 @@ class ArticleUpdateView(UpdateAPIView):
     def patch(self, request, pk=None):
         queryset = Article.objects.all()
         article = get_object_or_404(queryset, pk=pk)
-        serializer = ArticleSerializer(article, many=False)
+        serializer = ArticleSerializer(article, data=request.data, partial=True)
         article = formatter([serializer.data])
         return Response(article)
 
@@ -61,9 +65,9 @@ class ArticleUpdateView(UpdateAPIView):
 class ArticleDeleteView(DestroyAPIView):
     permission_classes = [IsAuthenticated]
 
-    def delete(self, request, pk=None):
+    def destroy(self, request, pk=None):
         queryset = Article.objects.all()
         article = get_object_or_404(queryset, pk=pk)
-        serializer = ArticleSerializer(article, many=False)
-        article = formatter([serializer.data])
-        return Response(article)
+        articleId = article.id
+        article.delete()
+        return Response(articleId)

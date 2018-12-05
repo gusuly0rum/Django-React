@@ -1,15 +1,18 @@
 import { connect } from 'react-redux';
 import ArticleForm from './article_form';
-import { createArticle } from '../../actions/article_actions';
+import { createArticle, updateArticle } from '../../actions/article_actions';
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   return {
+    article: ownProps.article || { title: '', body: '' },
+    isUpdate: Boolean(ownProps.article)
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createArticle: (formArticle) => dispatch(createArticle(formArticle))
+    createArticle: (formArticle) => dispatch(createArticle(formArticle)),
+    updateArticle: (articleId, formArticle) => dispatch(updateArticle(articleId, formArticle))
   }
 }
 

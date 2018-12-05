@@ -20,3 +20,11 @@ export const fetchArticle = (articleId) => {
 export const createArticle = (formArticle) => {
   return Axios.post('articles/create/', formArticle);
 }
+
+export const updateArticle = (articleId, formArticle) => {
+  return Axios.patch(`articles/${articleId}/update/`, formArticle);
+}
+
+export const deleteArticle = (articleId) => {
+  return Axios.delete(`articles/${articleId}/delete/`);
+}

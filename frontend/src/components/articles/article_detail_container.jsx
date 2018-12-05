@@ -1,17 +1,18 @@
 import { connect } from 'react-redux';
 import ArticleDetail from './article_detail';
-import { fetchArticle } from '../../actions/article_actions'
+import { fetchArticle, deleteArticle } from '../../actions/article_actions'
 
 const mapStateToProps = (state, pathProps) => {
   const articleId = pathProps.match.params.articleId
   return {
-    article: state.entities.articles[articleId]
+    article: state.entities.articles[articleId] || {}
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchArticle: (articleId) => dispatch(fetchArticle(articleId))
+    fetchArticle: (articleId) => dispatch(fetchArticle(articleId)),
+    deleteArticle: (articleId) => dispatch(deleteArticle(articleId))
   }
 }
 

@@ -1,8 +1,16 @@
 import * as ArticleAPI from '../apis/article_api';
 
+export const REMOVE_ARTICLE = 'REMOVE_ARTICLE';
 export const RECEIVE_ARTICLE = 'RECEIVE_ARTICLE';
 export const RECEIVE_ARTICLES = 'RECEIVE_ARTICLES';
 export const RECEIVE_ARTICLE_ERRORS = 'RECEIVE_ARTICLE_ERRORS';
+
+export const removeArticle = (articleId) => {
+  return {
+    type: REMOVE_ARTICLE,
+    articleId
+  }
+};
 
 export const receiveArticle = (article) => {
   return {
@@ -33,5 +41,18 @@ export const fetchArticle = (articleId) => (dispatch) => {
 export const createArticle = (formArticle) => (dispatch) => {
   return ArticleAPI.createArticle(formArticle).then(response => {
     dispatch(receiveArticle(response.data));
+  });
+};
+
+export const updateArticle = (articleId, formArticle) => (dispatch) => {
+  return ArticleAPI.updateArticle(articleId, formArticle).then(response => {
+    dispatch(receiveArticle(response.data));
+  });
+};
+
+export const deleteArticle = (articleId) => (dispatch) => {
+  return ArticleAPI.deleteArticle(articleId).then(response => {
+    console.log(response.data);
+    dispatch(removeArticle(response.data));
   });
 };

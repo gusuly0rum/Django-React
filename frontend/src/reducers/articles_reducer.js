@@ -1,4 +1,4 @@
-import { RECEIVE_ARTICLES, RECEIVE_ARTICLE } from '../actions/article_actions';
+import { RECEIVE_ARTICLES, RECEIVE_ARTICLE, REMOVE_ARTICLE } from '../actions/article_actions';
 
 const _defaultState = {};
 
@@ -17,6 +17,14 @@ const articlesReducer = (articlesState = _defaultState, action) => {
       ...articlesState,
       ...action.article
     };
+
+  case REMOVE_ARTICLE:
+    const newArticlesState = {
+      ...articlesState
+    };
+    console.log(action.articleId);
+    delete newArticlesState[action.articleId];
+    return newArticlesState;
 
   default:
     return articlesState;

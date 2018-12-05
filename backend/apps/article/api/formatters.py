@@ -1,11 +1,11 @@
 from django.db.models import Q
 
 
-def formatter(array):
+def formatter(articles):
     result = {}
-    for dictionary in array:
-        dict_id = dictionary['id']
-        result[dict_id] = dictionary
+    for article in articles:
+        article_id = article['id']
+        result[article_id] = article
     return result
 
 
