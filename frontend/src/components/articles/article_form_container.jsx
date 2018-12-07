@@ -5,7 +5,8 @@ import { createArticle, updateArticle } from '../../actions/article_actions';
 const mapStateToProps = (state, ownProps) => {
   return {
     article: ownProps.article || { title: '', body: '' },
-    isUpdate: Boolean(ownProps.article)
+    isUpdate: Boolean(ownProps.article),
+    errors: state.errors.articles
   }
 }
 

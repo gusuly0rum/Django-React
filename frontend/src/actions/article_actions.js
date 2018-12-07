@@ -47,15 +47,21 @@ export const fetchArticle = (articleId) => (dispatch) => {
 
 export const createArticle = (formArticle) => (dispatch) => {
   return ArticleAPI.createArticle(formArticle).then(
-    response => dispatch(receiveArticle(response.data)),
-    errors => dispatch(receiveArticleErrors(errors))
+    (response) => {
+      const data = response.data;
+      if (data.success === false) return dispatch(receiveArticleErrors(data.errors));
+      return dispatch(receiveArticle(data));
+    }
   );
 };
 
 export const updateArticle = (articleId, formArticle) => (dispatch) => {
   return ArticleAPI.updateArticle(articleId, formArticle).then(
-    response => dispatch(receiveArticle(response.data)),
-    errors => dispatch(receiveArticleErrors(errors))
+    (response) => {
+      const data = response.data;
+      if (data.success === false) return dispatch(receiveArticleErrors(data.errors));
+      return dispatch(receiveArticle(data));
+    }
   );
 };
 

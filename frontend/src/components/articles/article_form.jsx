@@ -25,16 +25,27 @@ class ArticleForm extends React.Component {
     if (this.props.isUpdate) {
       return this.props.updateArticle(this.props.article.id, this.state);
     }
-    this.props.createArticle(this.state)
-      .then(() => this.props.history.push('/articles'));
+    this.props.createArticle(this.state);
+      // .then(() => this.props.history.push('/articles'));
   }
 
   render() {
+    let titleError = null;
+    let bodyError = null;
+    if (this.props.errors) {
+      titleError = this.props.errors.title;
+      bodyError = this.props.errors.body;
+    }
+
     return (
       <div>
         <TextArea placeholder="Article title" autosize onChange={this.handleInput('title')} value={ this.state.title } />
         <div style={{ margin: '24px 0' }} />
+        <p>{ titleError }</p>
+        <div style={{ margin: '24px 0' }} />
         <TextArea placeholder="Article body" rows={5} onChange={this.handleInput('body')} value={this.state.body} />
+        <div style={{ margin: '24px 0' }} />
+        <p>{ bodyError }</p>
         <div style={{ margin: '24px 0' }} />
         <Button type="primary" block onClick={this.handleSubmit}>Submit</Button>
       </div>

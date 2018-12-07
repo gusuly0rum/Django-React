@@ -48,8 +48,8 @@ class ArticleCreateView(CreateAPIView):
         if serializer.is_valid():
             serializer.save()
             article = formatter([serializer.data])
-            return Response(article, status=201)
-        return Response(serializer.errors, status=400)
+            return Response(article, status=status.HTTP_201_CREATED)
+        return Response({ 'success': False, 'errors': serializer.errors })
 
 
 class ArticleUpdateView(UpdateAPIView):
@@ -63,9 +63,8 @@ class ArticleUpdateView(UpdateAPIView):
         if serializer.is_valid():
             serializer.save()
             article = formatter([serializer.data])
-            return Response(article)
-            
-        return Response(serializer.errors)
+            return Response(article, status=status.HTTP_201_CREATED)
+        return Response({ 'success': False, 'errors': serializer.errors })
 
 
 class ArticleDeleteView(DestroyAPIView):
