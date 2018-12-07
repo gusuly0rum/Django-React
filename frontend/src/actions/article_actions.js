@@ -26,6 +26,13 @@ export const receiveArticles = (articles) => {
   }
 };
 
+export const receiveArticleErrors = (errors) => {
+  return {
+    type: RECEIVE_ARTICLE_ERRORS,
+    errors
+  }
+};
+
 export const fetchArticles = () => (dispatch) => {
   return ArticleAPI.fetchArticles().then(response => {
     dispatch(receiveArticles(response.data));
@@ -39,15 +46,17 @@ export const fetchArticle = (articleId) => (dispatch) => {
 };
 
 export const createArticle = (formArticle) => (dispatch) => {
-  return ArticleAPI.createArticle(formArticle).then(response => {
-    dispatch(receiveArticle(response.data));
-  });
+  return ArticleAPI.createArticle(formArticle).then(
+    response => dispatch(receiveArticle(response.data)),
+    errors => dispatch(receiveArticleErrors(errors.responseJSON))
+  );
 };
 
 export const updateArticle = (articleId, formArticle) => (dispatch) => {
-  return ArticleAPI.updateArticle(articleId, formArticle).then(response => {
-    dispatch(receiveArticle(response.data));
-  });
+  return ArticleAPI.updateArticle(articleId, formArticle).then(
+    response => dispatch(receiveArticle(response.data)),
+    errors => dispatch(receiveArticleErrors(errors.responseJSON))
+  );
 };
 
 export const deleteArticle = (articleId) => (dispatch) => {

@@ -1,3 +1,4 @@
+from rest_framework import status
 from article.models import Article
 from .serializers import ArticleSerializer
 from rest_framework.response import Response
@@ -40,11 +41,7 @@ class ArticleCreateView(CreateAPIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        article = Article(
-            author=request.user,
-            title=request.data['title'],
-            body=request.data['body']
-        )
+        article = Article(author=request.user, title=request.data['title'], body=request.data['body'])
         article.save()
         serializer = ArticleSerializer(article, many=False)
         article = formatter([serializer.data])
@@ -58,10 +55,12 @@ class ArticleUpdateView(UpdateAPIView):
         queryset = Article.objects.all()
         article = get_object_or_404(queryset, pk=pk)
         serializer = ArticleSerializer(article, data=request.data, partial=True)
+
         if serializer.is_valid():
             serializer.save()
             article = formatter([serializer.data])
             return Response(article)
+            
         return Response(serializer.errors)
 
 
