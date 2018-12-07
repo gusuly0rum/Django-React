@@ -48,14 +48,14 @@ export const fetchArticle = (articleId) => (dispatch) => {
 export const createArticle = (formArticle) => (dispatch) => {
   return ArticleAPI.createArticle(formArticle).then(
     response => dispatch(receiveArticle(response.data)),
-    errors => dispatch(receiveArticleErrors(errors.responseJSON))
+    errors => dispatch(receiveArticleErrors(errors))
   );
 };
 
 export const updateArticle = (articleId, formArticle) => (dispatch) => {
   return ArticleAPI.updateArticle(articleId, formArticle).then(
     response => dispatch(receiveArticle(response.data)),
-    errors => dispatch(receiveArticleErrors(errors.responseJSON))
+    errors => dispatch(receiveArticleErrors(errors))
   );
 };
 
