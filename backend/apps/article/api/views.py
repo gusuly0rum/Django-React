@@ -1,13 +1,12 @@
+from .utils import formatter
 from rest_framework import status
+from article.models import Article
+from .serializers import ArticleSerializer
 from rest_framework.response import Response
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from django.shortcuts import get_object_or_404
 
-
-from article.models import Article
-from .serializers import ArticleSerializer
-from .utils import formatter, query_filter
 from rest_framework.generics import (
     ListAPIView,
     RetrieveAPIView,
@@ -76,3 +75,15 @@ class ArticleDeleteView(DestroyAPIView):
         articleId = article.id
         article.delete()
         return Response(articleId)
+
+
+def query_filter(request, queryset):
+    query = request.GET.get('q')
+
+    if query is not None:
+        articles = queryset.filter(
+            Q(title__icontains=query) or
+            Q(body__icontains=query))
+        return articles
+
+    return queryset

@@ -56,7 +56,7 @@ INSTALLED_APPS = [
 
     # apps
     'article.apps.ArticleConfig',
-    'music.apps.MusicConfig',
+    'comment.apps.CommentConfig',
 ]
 
 SITE_ID = 1

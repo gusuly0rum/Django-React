@@ -26,5 +26,5 @@ urlpatterns = [
 
     # apps
     path('api/articles/', include('article.api.urls')),
-    path('api/music/', include('music.api.urls')),
+    path('api/comments/', include('comment.api.urls')),
 ]

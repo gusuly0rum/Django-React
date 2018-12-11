@@ -14,5 +14,6 @@ class ArticleSerializer(serializers.ModelSerializer):
         author = self.context['request'].user
         title = validated_data.get('title')
         body = validated_data.get('body')
+        
         article = Article.objects.create(author=author, **validated_data)
         return article
